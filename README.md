@@ -58,7 +58,7 @@ Trabalho: Blog API
   
 * Atualiza um post específico (JSON obrigatório):
 ```
-  POST localhost:8080/posts/{id_post}
+  PUT localhost:8080/posts/{id_post}
 ```  
     Exemplo para atualizar o post de id = 1:  
     localhost:8080/posts/1    
