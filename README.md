@@ -8,6 +8,8 @@ Professor: Tales Santos
 
 Trabalho: Blog API
 
+Aluno: André Guilherme de Almeida Santos
+
 ### Comandos básicos
 
 - COMANDO para instalar dependências:
