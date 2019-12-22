@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -18,23 +19,27 @@ final class Post
 
     /**
      * @ORM\Column()
+     * @Assert\NotBlank()
+     * @Assert\Length(min="3", max="50")
      */
     public string $title;
 
     /**
      * @ORM\Column()
+     * @Assert\NotBlank()
+     * @Assert\Length(min="3")
      */
-    public string $descripion;
+    public string $description;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private \Datetime $createdAt;
     
-    public function __construct(string $title, string $descripion)
+    public function __construct(string $title = null, string $description = null)
     {
         $this->title = $title;
-        $this->descripion = $descripion;
+        $this->description = $description;
         $this->createdAt = new \Datetime();
     }
 
