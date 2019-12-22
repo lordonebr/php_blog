@@ -68,6 +68,47 @@ final class PostControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_NO_CONTENT, $this->client->getResponse()->getStatusCode());
     }
 
+    public function test_list_post(): void
+    {
+        $post = new Post('teste titulo', 'teste descrição');
+        $this->em->persist($post);
+        $this->em->flush();
+
+        $this->client->request('GET', '/posts', [], [], [], null);
+        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function test_post_details(): void
+    {
+        $post = new Post('teste titulo', 'teste descrição');
+        $this->em->persist($post);
+        $this->em->flush();
+
+        $this->client->request('GET', '/posts/1', [], [], [], null);
+        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function test_invalid_post_details(): void
+    {
+        $this->client->request('GET', '/posts/1', [], [], [], null);
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
+    }
+    
+    public function test_invalid_update_post(): void
+    {
+        $this->client->request('PUT','/posts/1', [], [], [], json_encode([
+            'title' => 'novo titulo',
+            'description' => 'nova descrição'
+            ])); 
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function test_invalid_delete_post(): void
+    {
+        $this->client->request('DELETE', '/posts/1', [], [], [], null);
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
+    }
+
     /*public function test_create_post_with_invalid_title(): void
     {
         $this->client->request('POST', '/posts',[],[],[], json_encode([

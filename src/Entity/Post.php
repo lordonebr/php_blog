@@ -18,14 +18,16 @@ final class Post
     private ?int $id = null;
 
     /**
-     * @ORM\Column()
+     * @ORM\Column(type="string")
+     * @Assert\Type(type="string")
      * @Assert\NotBlank()
      * @Assert\Length(min="3", max="50")
      */
     public string $title;
 
     /**
-     * @ORM\Column()
+     * @ORM\Column(type="string")
+     * @Assert\Type(type="string")
      * @Assert\NotBlank()
      * @Assert\Length(min="3")
      */

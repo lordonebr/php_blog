@@ -102,10 +102,20 @@ final class PostController
         /**@var Post $post */
         $post = $this->entityManager->getRepository(Post::class)->find($id);
 
+        if (null === $post){
+            throw new NotFoundHttpException('Post não encontrado');
+        }
+
         $data = json_decode($request->getContent(), true);
 
         $post->title = $data['title'];
         $post->description = $data['description'];
+
+        $errors = $this->validator->validate($post);
+    
+        if (count($errors)){
+            throw new ValidationException($errors);
+        }
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();
@@ -120,6 +130,16 @@ final class PostController
     {
         /**@var Post $post */
         $post = $this->entityManager->getRepository(Post::class)->find($id);
+
+        if (null === $post){
+            throw new NotFoundHttpException('Post não encontrado');
+        }
+
+        $errors = $this->validator->validate($post);
+    
+        if (count($errors)){
+            throw new ValidationException($errors);
+        }
 
         $this->entityManager->remove($post);
         $this->entityManager->flush();
